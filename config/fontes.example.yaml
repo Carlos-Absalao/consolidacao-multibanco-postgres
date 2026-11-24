@@ -1,0 +1,19 @@
+# Use variáveis de ambiente para senhas — nunca versione credenciais.
+destino: postgresql://consolidador:${SENHA_DESTINO}@localhost:5432/painel
+
+fontes:
+  - municipio: MUNICIPIO_A
+    dsn: postgresql://leitura:${SENHA_A}@host-a:5432/processos
+  - municipio: MUNICIPIO_B
+    dsn: postgresql://leitura:${SENHA_B}@host-b:5432/processos
+  - municipio: MUNICIPIO_C
+    dsn: postgresql://leitura:${SENHA_C}@host-c:5432/processos
+    ativo: false   # entra quando o município for para produção
+
+tabelas:
+  - nome: processo
+    chave: id_processo
+    colunas: [tipo_processo, unidade_geradora, dt_abertura, dt_conclusao, situacao]
+  - nome: documento
+    chave: id_documento
+    colunas: [id_processo, tipo_documento, origem, dt_inclusao]
